@@ -112,6 +112,7 @@
           <Property Name="Status" Type="int" />
           <Property Name="HostUser" Type="varchar" MaxLength="50" />
           <Property Name="Conclusion" Type="varchar(max)" />
+          <Property Name="RoomKey" Type="bigint" />
         </EntityType>
         <EntityType Name="Meeting Notes">
           <Key>
@@ -460,6 +461,7 @@
           <NavigationProperty Name="Decision_Item" Relationship="Self.FK_Decision_Item_Meeting" FromRole="Meeting" ToRole="Decision_Item" />
           <NavigationProperty Name="Meeting_Notes" Relationship="Self.FK_MeetingNotes_Meeting" FromRole="Meeting" ToRole="Meeting_Notes" />
           <NavigationProperty Name="Attendances" Relationship="Model.FK_Attendance_Meeting" FromRole="Meeting" ToRole="Attendance" />
+          <Property Name="RoomKey" Type="Int64" />
         </EntityType>
         <EntityType Name="Meeting_Note">
           <Key>
@@ -797,6 +799,7 @@
           <EntitySetMapping Name="Meetings">
             <EntityTypeMapping TypeName="Model.Meeting">
               <MappingFragment StoreEntitySet="Meeting">
+                <ScalarProperty Name="RoomKey" ColumnName="RoomKey" />
                 <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
                 <ScalarProperty Name="project_Name" ColumnName="project Name" />
                 <ScalarProperty Name="Meeting_Subject" ColumnName="Meeting Subject" />
