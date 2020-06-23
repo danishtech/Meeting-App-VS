@@ -156,6 +156,16 @@
           <Property Name="Createdby" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <Association Name="FK_Action Item_Meeting">
           <End Role="Meeting" Type="Self.Meeting" Multiplicity="0..1" />
           <End Role="Action Item" Type="Self.Action Item" Multiplicity="*" />
@@ -168,18 +178,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AppUser_AppUser">
-          <End Role="AppUser" Type="Self.AppUser" Multiplicity="1" />
-          <End Role="AppUser1" Type="Self.AppUser" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="AppUserID" />
-            </Principal>
-            <Dependent Role="AppUser1">
-              <PropertyRef Name="AppUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AppUser_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
           <End Role="AppUser" Type="Self.AppUser" Multiplicity="*" />
@@ -189,18 +187,6 @@
             </Principal>
             <Dependent Role="AppUser">
               <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Attendance_AppUser">
-          <End Role="AppUser" Type="Self.AppUser" Multiplicity="0..1" />
-          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="AppUserID" />
-            </Principal>
-            <Dependent Role="Attendance">
-              <PropertyRef Name="AppUserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -299,21 +285,14 @@
           <EntitySet Name="Poll" EntityType="Self.Poll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PollOption" EntityType="Self.PollOption" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Action Item_Meeting" Association="Self.FK_Action Item_Meeting">
             <End Role="Meeting" EntitySet="Meeting" />
             <End Role="Action Item" EntitySet="Action Item" />
           </AssociationSet>
-          <AssociationSet Name="FK_AppUser_AppUser" Association="Self.FK_AppUser_AppUser">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="AppUser1" EntitySet="AppUser" />
-          </AssociationSet>
           <AssociationSet Name="FK_AppUser_Roles" Association="Self.FK_AppUser_Roles">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="AppUser" EntitySet="AppUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Attendance_AppUser" Association="Self.FK_Attendance_AppUser">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="Attendance" EntitySet="Attendance" />
           </AssociationSet>
           <AssociationSet Name="FK_Attendance_Meeting" Association="Self.FK_Attendance_Meeting">
             <End Role="Meeting" EntitySet="Meeting" />
@@ -364,42 +343,6 @@
           <Property Name="MeetingID" Type="Int32" />
           <NavigationProperty Name="Meeting" Relationship="Self.FK_Action_Item_Meeting" FromRole="Action_Item" ToRole="Meeting" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_Action_Item" FromRole="Action_Item" ToRole="Comment" />
-        </EntityType>
-        <EntityType Name="AppUser">
-          <Key>
-            <PropertyRef Name="AppUserID" />
-          </Key>
-          <Property Name="AppUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Initials" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Prefix" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Suffix" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="LoginName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DisabledDate" Type="DateTime" Precision="3" />
-          <Property Name="LoginAttemptsCount" Type="Int32" />
-          <Property Name="AgreedToLicenseDate" Type="DateTime" Precision="3" />
-          <Property Name="SpecialOption" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Fax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="AppUserNote" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="SortNameFirstLast" Type="String" MaxLength="101" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="SortNameLastFirst" Type="String" MaxLength="102" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="DisplayName" Type="String" MaxLength="141" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedByID" Type="Int32" Nullable="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="RoleId" Type="Int32" />
-          <NavigationProperty Name="AppUser1" Relationship="Model.FK_AppUser_AppUser" FromRole="AppUser" ToRole="AppUser1" />
-          <NavigationProperty Name="AppUser2" Relationship="Model.FK_AppUser_AppUser" FromRole="AppUser1" ToRole="AppUser" />
-          <NavigationProperty Name="Role" Relationship="Model.FK_AppUser_Roles" FromRole="AppUser" ToRole="Role" />
-          <NavigationProperty Name="Attendances" Relationship="Model.FK_Attendance_AppUser" FromRole="AppUser" ToRole="Attendance" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -460,8 +403,8 @@
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_Meeting" FromRole="Meeting" ToRole="Comment" />
           <NavigationProperty Name="Decision_Item" Relationship="Self.FK_Decision_Item_Meeting" FromRole="Meeting" ToRole="Decision_Item" />
           <NavigationProperty Name="Meeting_Notes" Relationship="Self.FK_MeetingNotes_Meeting" FromRole="Meeting" ToRole="Meeting_Notes" />
-          <NavigationProperty Name="Attendances" Relationship="Model.FK_Attendance_Meeting" FromRole="Meeting" ToRole="Attendance" />
           <Property Name="RoomKey" Type="Int64" />
+          <NavigationProperty Name="Attendances" Relationship="Model.FK_Attendance_Meeting" FromRole="Meeting" ToRole="Attendance" />
         </EntityType>
         <EntityType Name="Meeting_Note">
           <Key>
@@ -584,7 +527,6 @@
         </Association>
         <EntityContainer Name="Virtual_StudyEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Action_Items" EntityType="Self.Action_Item" />
-          <EntitySet Name="AppUsers" EntityType="Self.AppUser" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="Decision_Items" EntityType="Self.Decision_Item" />
           <EntitySet Name="Meetings" EntityType="Self.Meeting" />
@@ -620,18 +562,12 @@
             <End Role="PollOption" EntitySet="PollOptions" />
           </AssociationSet>
           <EntitySet Name="Roles" EntityType="Model.Role" />
-          <AssociationSet Name="FK_AppUser_AppUser" Association="Model.FK_AppUser_AppUser">
-            <End Role="AppUser" EntitySet="AppUsers" />
-            <End Role="AppUser1" EntitySet="AppUsers" />
-          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
+          <EntitySet Name="AppUsers" EntityType="Model.AppUser" />
+          <EntitySet Name="Attendances" EntityType="Model.Attendance" />
           <AssociationSet Name="FK_AppUser_Roles" Association="Model.FK_AppUser_Roles">
             <End Role="Role" EntitySet="Roles" />
             <End Role="AppUser" EntitySet="AppUsers" />
-          </AssociationSet>
-          <EntitySet Name="Attendances" EntityType="Model.Attendance" />
-          <AssociationSet Name="FK_Attendance_AppUser" Association="Model.FK_Attendance_AppUser">
-            <End Role="AppUser" EntitySet="AppUsers" />
-            <End Role="Attendance" EntitySet="Attendances" />
           </AssociationSet>
           <AssociationSet Name="FK_Attendance_Meeting" Association="Model.FK_Attendance_Meeting">
             <End Role="Meeting" EntitySet="Meetings" />
@@ -649,18 +585,60 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AppUsers" Relationship="Model.FK_AppUser_Roles" FromRole="Role" ToRole="AppUser" />
         </EntityType>
-        <Association Name="FK_AppUser_AppUser">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.AppUser" Role="AppUser1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="AppUserID" />
-            </Principal>
-            <Dependent Role="AppUser1">
-              <PropertyRef Name="AppUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="AppUser">
+          <Key>
+            <PropertyRef Name="AppUserID" />
+          </Key>
+          <Property Name="AppUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Initials" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Prefix" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Suffix" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LoginName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DisabledDate" Type="DateTime" Precision="3" />
+          <Property Name="LoginAttemptsCount" Type="Int32" />
+          <Property Name="AgreedToLicenseDate" Type="DateTime" Precision="3" />
+          <Property Name="SpecialOption" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AppUserNote" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="SortNameFirstLast" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="SortNameLastFirst" Type="String" Nullable="false" MaxLength="102" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="141" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedByID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedByID" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="Model.FK_AppUser_Roles" FromRole="AppUser" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceID" />
+          </Key>
+          <Property Name="AttendanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppUserID" Type="Int32" />
+          <Property Name="MeetingID" Type="Int32" />
+          <Property Name="AttendanceDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="Meeting" Relationship="Model.FK_Attendance_Meeting" FromRole="Attendance" ToRole="Meeting" />
+        </EntityType>
         <Association Name="FK_AppUser_Roles">
           <End Type="Model.Role" Role="Role" Multiplicity="0..1" />
           <End Type="Model.AppUser" Role="AppUser" Multiplicity="*" />
@@ -670,30 +648,6 @@
             </Principal>
             <Dependent Role="AppUser">
               <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Attendance">
-          <Key>
-            <PropertyRef Name="AttendanceID" />
-          </Key>
-          <Property Name="AttendanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AppUserID" Type="Int32" />
-          <Property Name="MeetingID" Type="Int32" />
-          <Property Name="AttendanceDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AppUser" Relationship="Model.FK_Attendance_AppUser" FromRole="Attendance" ToRole="AppUser" />
-          <NavigationProperty Name="Meeting" Relationship="Model.FK_Attendance_Meeting" FromRole="Attendance" ToRole="Meeting" />
-          <Property Name="IsActive" Type="Int32" />
-        </EntityType>
-        <Association Name="FK_Attendance_AppUser">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="0..1" />
-          <End Type="Model.Attendance" Role="Attendance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="AppUserID" />
-            </Principal>
-            <Dependent Role="Attendance">
-              <PropertyRef Name="AppUserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -728,39 +682,6 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Priority" ColumnName="Priority" />
                 <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AppUsers">
-            <EntityTypeMapping TypeName="Model.AppUser">
-              <MappingFragment StoreEntitySet="AppUser">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="AppUserID" ColumnName="AppUserID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Initials" ColumnName="Initials" />
-                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
-                <ScalarProperty Name="Suffix" ColumnName="Suffix" />
-                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="DisabledDate" ColumnName="DisabledDate" />
-                <ScalarProperty Name="LoginAttemptsCount" ColumnName="LoginAttemptsCount" />
-                <ScalarProperty Name="AgreedToLicenseDate" ColumnName="AgreedToLicenseDate" />
-                <ScalarProperty Name="SpecialOption" ColumnName="SpecialOption" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="AppUserNote" ColumnName="AppUserNote" />
-                <ScalarProperty Name="SortNameFirstLast" ColumnName="SortNameFirstLast" />
-                <ScalarProperty Name="SortNameLastFirst" ColumnName="SortNameLastFirst" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedByID" ColumnName="ModifiedByID" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -862,6 +783,50 @@
                 <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppUsers">
+            <EntityTypeMapping TypeName="Model.AppUser">
+              <MappingFragment StoreEntitySet="AppUser">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedByID" ColumnName="ModifiedByID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="SortNameLastFirst" ColumnName="SortNameLastFirst" />
+                <ScalarProperty Name="SortNameFirstLast" ColumnName="SortNameFirstLast" />
+                <ScalarProperty Name="AppUserNote" ColumnName="AppUserNote" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SpecialOption" ColumnName="SpecialOption" />
+                <ScalarProperty Name="AgreedToLicenseDate" ColumnName="AgreedToLicenseDate" />
+                <ScalarProperty Name="LoginAttemptsCount" ColumnName="LoginAttemptsCount" />
+                <ScalarProperty Name="DisabledDate" ColumnName="DisabledDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Suffix" ColumnName="Suffix" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="Initials" ColumnName="Initials" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="AppUserID" ColumnName="AppUserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

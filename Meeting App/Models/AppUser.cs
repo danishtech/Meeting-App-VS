@@ -18,15 +18,6 @@ using System;
 public partial class AppUser
 {
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public AppUser()
-    {
-
-        this.Attendances = new HashSet<Attendance>();
-
-    }
-
-
     public int AppUserID { get; set; }
 
     public string FirstName { get; set; }
@@ -83,15 +74,7 @@ public partial class AppUser
 
 
 
-    public virtual AppUser AppUser1 { get; set; }
-
-    public virtual AppUser AppUser2 { get; set; }
-
     public virtual Role Role { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Attendance> Attendances { get; set; }
 
 }
 

@@ -15,22 +15,18 @@ namespace Meeting_App.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Attendance
+public partial class sysdiagram
 {
 
-    public int AttendanceID { get; set; }
+    public string name { get; set; }
 
-    public Nullable<int> AppUserID { get; set; }
+    public int principal_id { get; set; }
 
-    public Nullable<int> MeetingID { get; set; }
+    public int diagram_id { get; set; }
 
-    public Nullable<System.DateTime> AttendanceDate { get; set; }
+    public Nullable<int> version { get; set; }
 
-    public Nullable<int> IsActive { get; set; }
-
-
-
-    public virtual Meeting Meeting { get; set; }
+    public byte[] definition { get; set; }
 
 }
 

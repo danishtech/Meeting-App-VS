@@ -17,7 +17,7 @@ namespace Meeting_App.Controllers
         // GET: AttendanceMVC
         public ActionResult Index()
         {
-            var attendances = db.Attendances.Include(a => a.AppUser).Include(a => a.Meeting);
+            var attendances = db.Attendances.Include(a => a.Meeting);
             return View(attendances.ToList());
         }
 

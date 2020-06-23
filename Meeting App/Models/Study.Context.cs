@@ -34,8 +34,6 @@ public partial class Virtual_StudyEntities : DbContext
 
     public virtual DbSet<Action_Item> Action_Items { get; set; }
 
-    public virtual DbSet<AppUser> AppUsers { get; set; }
-
     public virtual DbSet<Comment> Comments { get; set; }
 
     public virtual DbSet<Decision_Item> Decision_Items { get; set; }
@@ -49,6 +47,10 @@ public partial class Virtual_StudyEntities : DbContext
     public virtual DbSet<PollOption> PollOptions { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+
+    public virtual DbSet<AppUser> AppUsers { get; set; }
 
     public virtual DbSet<Attendance> Attendances { get; set; }
 

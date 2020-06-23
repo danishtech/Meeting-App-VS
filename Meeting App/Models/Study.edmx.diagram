@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="943549f3aeea487ab4219b97ebdda207" Name="Diagram1">
         <EntityTypeShape EntityType="Model.Action_Item" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.AppUser" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Comment" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Decision_Item" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Meeting" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
@@ -21,10 +20,10 @@
         <AssociationConnector Association="Model.FK_MeetingNotes_Meeting" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PollOption_PollOption" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="5.5" PointY="8.125" />
-        <AssociationConnector Association="Model.FK_AppUser_AppUser" />
+        <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="10.375" PointY="3.75" />
+        <EntityTypeShape EntityType="Model.AppUser" Width="1.5" PointX="5.75" PointY="12.875" />
+        <EntityTypeShape EntityType="Model.Attendance" Width="1.5" PointX="8" PointY="6" />
         <AssociationConnector Association="Model.FK_AppUser_Roles" />
-        <EntityTypeShape EntityType="Model.Attendance" Width="1.5" PointX="10" PointY="7" />
-        <AssociationConnector Association="Model.FK_Attendance_AppUser" />
         <AssociationConnector Association="Model.FK_Attendance_Meeting" />
         </Diagram>
     </edmx:Diagrams>
