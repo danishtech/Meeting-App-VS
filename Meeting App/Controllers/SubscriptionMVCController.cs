@@ -10,112 +10,107 @@ using Meeting_App.Models;
 
 namespace Meeting_App.Controllers
 {
-    public class AttendanceMVCController : Controller
+    public class SubscriptionMVCController : Controller
     {
         private Virtual_StudyEntities db = new Virtual_StudyEntities();
 
-        // GET: AttendanceMVC
+        // GET: SubscriptionMVC
         public ActionResult Index()
         {
-            var attendances = db.Attendances.Include(a => a.Meeting);
-            return View(attendances.ToList());
+            return View(db.Subscriptions.ToList());
         }
 
-        // GET: AttendanceMVC/Details/5
+        // GET: SubscriptionMVC/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Attendance attendance = db.Attendances.Find(id);
-            if (attendance == null)
+            Subscription subscription = db.Subscriptions.Find(id);
+            if (subscription == null)
             {
                 return HttpNotFound();
             }
-            return View(attendance);
+            return View(subscription);
         }
 
-        // GET: AttendanceMVC/Create
+        // GET: SubscriptionMVC/Create
         public ActionResult Create()
         {
-            ViewBag.MeetingID = new SelectList(db.Meetings, "MeetingID", "project_Name");
             return View();
         }
 
-        // POST: AttendanceMVC/Create
+        // POST: SubscriptionMVC/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AttendanceID,AppUserID,MeetingID,AttendanceDate,IsActive")] Attendance attendance)
+        public ActionResult Create([Bind(Include = "SubscriptionID,SubscriptionName,NumberOfUsers,CreatedDate,IsActive,CompanyName,Price,CreatedBy,ModifiedBy,ModifiedDate")] Subscription subscription)
         {
             if (ModelState.IsValid)
             {
-                db.Attendances.Add(attendance);
+                db.Subscriptions.Add(subscription);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MeetingID = new SelectList(db.Meetings, "MeetingID", "project_Name", attendance.MeetingID);
-            return View(attendance);
+            return View(subscription);
         }
 
-        // GET: AttendanceMVC/Edit/5
+        // GET: SubscriptionMVC/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Attendance attendance = db.Attendances.Find(id);
-            if (attendance == null)
+            Subscription subscription = db.Subscriptions.Find(id);
+            if (subscription == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.MeetingID = new SelectList(db.Meetings, "MeetingID", "project_Name", attendance.MeetingID);
-            return View(attendance);
+            return View(subscription);
         }
 
-        // POST: AttendanceMVC/Edit/5
+        // POST: SubscriptionMVC/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AttendanceID,AppUserID,MeetingID,AttendanceDate,IsActive")] Attendance attendance)
+        public ActionResult Edit([Bind(Include = "SubscriptionID,SubscriptionName,NumberOfUsers,CreatedDate,IsActive,CompanyName,Price,CreatedBy,ModifiedBy,ModifiedDate")] Subscription subscription)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(attendance).State = EntityState.Modified;
+                db.Entry(subscription).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MeetingID = new SelectList(db.Meetings, "MeetingID", "project_Name", attendance.MeetingID);
-            return View(attendance);
+            return View(subscription);
         }
 
-        // GET: AttendanceMVC/Delete/5
+        // GET: SubscriptionMVC/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Attendance attendance = db.Attendances.Find(id);
-            if (attendance == null)
+            Subscription subscription = db.Subscriptions.Find(id);
+            if (subscription == null)
             {
                 return HttpNotFound();
             }
-            return View(attendance);
+            return View(subscription);
         }
 
-        // POST: AttendanceMVC/Delete/5
+        // POST: SubscriptionMVC/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Attendance attendance = db.Attendances.Find(id);
-            db.Attendances.Remove(attendance);
+            Subscription subscription = db.Subscriptions.Find(id);
+            db.Subscriptions.Remove(subscription);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

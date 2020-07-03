@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Danish Ahmad\Downloads\Meeting-App-VS (1)\Meeting-App-VS\Meeting App\Models\Study.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Danish Ahmad\Downloads\Meeting-App-VS (1)\VS_25_06_2020\Meeting App\Models\Study.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

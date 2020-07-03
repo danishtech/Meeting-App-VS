@@ -417,6 +417,15 @@ namespace Meeting_App.Controllers
 
             return userExists;
         }
+
+        [HttpGet]
+        [Route("api/User/Count")]
+        public int NumberOfusers()
+        {
+            // string email = Convert.ToString(id);
+            int userExists = db.AppUsers.Count();
+            return userExists;
+        }
         // GET: api/User/5
         [ResponseType(typeof(AppUser))]
         [Route("api/User/{id}")]

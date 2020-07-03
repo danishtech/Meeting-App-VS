@@ -412,6 +412,8 @@
     <Compile Include="Controllers\PollOptionMVCController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RoleMVCController.cs" />
+    <Compile Include="Controllers\SubscriptionController.cs" />
+    <Compile Include="Controllers\SubscriptionMVCController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserMVCController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -466,6 +468,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Study.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Subscription.cs">
+      <DependentUpon>Study.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Study.tt</DependentUpon>
@@ -723,6 +728,11 @@
     <Content Include="Views\RoleMVC\Details.cshtml" />
     <Content Include="Views\RoleMVC\Edit.cshtml" />
     <Content Include="Views\RoleMVC\Index.cshtml" />
+    <Content Include="Views\SubscriptionMVC\Create.cshtml" />
+    <Content Include="Views\SubscriptionMVC\Delete.cshtml" />
+    <Content Include="Views\SubscriptionMVC\Details.cshtml" />
+    <Content Include="Views\SubscriptionMVC\Edit.cshtml" />
+    <Content Include="Views\SubscriptionMVC\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,7 +17,8 @@ namespace Meeting_App.Controllers
         // GET: UserMVC
         public ActionResult Index()
         {
-            return View(db.AppUsers.ToList());
+            var appUsers = db.AppUsers.Include(a => a.Role);
+            return View(appUsers.ToList());
         }
 
         // GET: UserMVC/Details/5
@@ -38,6 +39,7 @@ namespace Meeting_App.Controllers
         // GET: UserMVC/Create
         public ActionResult Create()
         {
+            ViewBag.RoleId = new SelectList(db.Roles, "RoleID", "RoleName");
             return View();
         }
 
@@ -46,7 +48,7 @@ namespace Meeting_App.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AppUserID,FirstName,MiddleName,LastName,Initials,Prefix,Suffix,LoginName,Password,DisabledDate,LoginAttemptsCount,AgreedToLicenseDate,SpecialOption,IsActive,Email,Phone,CellPhone,Fax,AppUserNote,SortNameFirstLast,SortNameLastFirst,DisplayName,CreatedByID,CreatedDate,ModifiedByID,ModifiedDate")] AppUser appUser)
+        public ActionResult Create([Bind(Include = "AppUserID,FirstName,MiddleName,LastName,Initials,Prefix,Suffix,LoginName,Password,DisabledDate,LoginAttemptsCount,AgreedToLicenseDate,SpecialOption,IsActive,Email,Phone,CellPhone,Fax,AppUserNote,SortNameFirstLast,SortNameLastFirst,DisplayName,CreatedByID,CreatedDate,ModifiedByID,ModifiedDate,RoleId")] AppUser appUser)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +57,7 @@ namespace Meeting_App.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.RoleId = new SelectList(db.Roles, "RoleID", "RoleName", appUser.RoleId);
             return View(appUser);
         }
 
@@ -70,6 +73,7 @@ namespace Meeting_App.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.RoleId = new SelectList(db.Roles, "RoleID", "RoleName", appUser.RoleId);
             return View(appUser);
         }
 
@@ -78,7 +82,7 @@ namespace Meeting_App.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AppUserID,FirstName,MiddleName,LastName,Initials,Prefix,Suffix,LoginName,Password,DisabledDate,LoginAttemptsCount,AgreedToLicenseDate,SpecialOption,IsActive,Email,Phone,CellPhone,Fax,AppUserNote,SortNameFirstLast,SortNameLastFirst,DisplayName,CreatedByID,CreatedDate,ModifiedByID,ModifiedDate")] AppUser appUser)
+        public ActionResult Edit([Bind(Include = "AppUserID,FirstName,MiddleName,LastName,Initials,Prefix,Suffix,LoginName,Password,DisabledDate,LoginAttemptsCount,AgreedToLicenseDate,SpecialOption,IsActive,Email,Phone,CellPhone,Fax,AppUserNote,SortNameFirstLast,SortNameLastFirst,DisplayName,CreatedByID,CreatedDate,ModifiedByID,ModifiedDate,RoleId")] AppUser appUser)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +90,7 @@ namespace Meeting_App.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.RoleId = new SelectList(db.Roles, "RoleID", "RoleName", appUser.RoleId);
             return View(appUser);
         }
 

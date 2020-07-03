@@ -54,6 +54,8 @@ public partial class Virtual_StudyEntities : DbContext
 
     public virtual DbSet<Attendance> Attendances { get; set; }
 
+    public virtual DbSet<Subscription> Subscriptions { get; set; }
+
 }
 
 }
